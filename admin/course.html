@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course List</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- DataTables CSS -->
+  <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <link href="../css/admin.css" rel="stylesheet">
+  <style>
+    .table-container {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+
+    .btn-edit {
+      background-color: #28a745;
+      color: white;
+      border-color: #28a745;
+    }
+
+    .btn-edit:hover {
+      background-color: #218838;
+      border-color: #1e7e34;
+    }
+
+    .btn-delete {
+      background-color: #dc3545;
+      color: white;
+      border-color: #dc3545;
+    }
+
+    .btn-delete:hover {
+      background-color: #c82333;
+      border-color: #bd2130;
+    }
+
+    .add-new-btn {
+      float: right;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-custom">
+    <a class="navbar-brand" href="#">Admin Panel</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="./">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="attendance-list">Attendance List</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="student-list">Student List</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="course">Course</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="subject">Subject</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="faculty">Faculty</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="class">Class</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="students">Students</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="logout">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="d-flex justify-content-between mb-3">
+      <h4>Course List</h4>
+      <button type="button" class="btn btn-primary add-new-btn" data-toggle="modal" data-target="#addCourseModal">Add New</button>
+    </div>
+    <div class="table-responsive table-container">
+      <table id="courseTable" class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Course ID</th>
+            <th>Course</th>
+            <th>Description</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Table rows will be dynamically added here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Modal for Adding Course -->
+  <div class="modal fade" id="addCourseModal" tabindex="-1" role="dialog" aria-labelledby="addCourseModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addCourseModalLabel">Add New Course</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="addCourseForm">
+            <div class="form-group">
+              <label for="courseName">Course</label>
+              <input type="text" class="form-control" id="courseName" name="courseName" required>
+            </div>
+            <div class="form-group">
+              <label for="courseDescription">Description</label>
+              <textarea class="form-control" id="courseDescription" name="courseDescription" rows="3" required></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="saveCourseBtn">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Editing Course -->
+  <div class="modal fade" id="editCourseModal" tabindex="-1" role="dialog" aria-labelledby="editCourseModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editCourseModalLabel">Edit Course</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="editCourseForm">
+            <div class="form-group">
+              <label for="editCourseName">Course</label>
+              <input type="text" class="form-control" id="editCourseName" name="editCourseName" required>
+            </div>
+            <div class="form-group">
+              <label for="editCourseDescription">Description</label>
+              <textarea class="form-control" id="editCourseDescription" name="editCourseDescription" rows="3" required></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="updateCourseBtn">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- DataTables JS -->
+  <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+  <!-- SweetAlert JS -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
+  <script src="../js/validate.js"></script>
+  <script src="../js/course.js"></script>  
+  </body>
+
+</html>
